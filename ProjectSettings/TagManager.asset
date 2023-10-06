@@ -13,16 +13,16 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PLAYER_LAYER
+  - PLAYER_WEAPON
+  - ENEMY_LAYER
+  - ENEMY_WEAPON
+  - GROUND_LAYER
+  - BOUNDARY_LAYER
+  - PICKUPS_LAYER
+  - DESTINATION_LAYER
+  - SENSOR
+  - NON_RENDERING_LAYER
   - 
   - 
   - 

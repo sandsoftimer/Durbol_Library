@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+#if KOLPO_GAMEANALYTICS_SDK_INSTALLED
+using GameAnalyticsSDK;
+#endif
+
+#if HOMA_SDK_INSTALLED
+using HomaGames.HomaBelly;
+#endif
+
+
+public class #SCRIPTNAME# : DurbolManager
+{
+    public override void Awake()
+    {
+        base.Awake();
+        ChangeGameState(GameState.NONE);
+    }
+
+    public override void None()
+    {
+        base.None();
+        ChangeGameState(GameState.GAME_DATA_LOADED);
+    }
+
+    public override void GameDataLoad()
+    {
+        base.GameDataLoad();
+        ChangeGameState(GameState.GAME_INITIALIZED);
+
+        gameStartingUI.SetBool("Hide", false);
+    }
+
+    public override void GameStart()
+    {
+        base.GameStart();
+
+        gameStartingUI.SetBool("Hide", true);
+        gamePlayUI.SetBool("Hide", false);
+
+#if HOMA_SDK_INSTALLED
+        Analytics.LevelStarted(gameplayData.currentLevelNumber + 1);
+#endif
+
+    }
+
+    public override void GameOver()
+    {
+        base.GameOver();
+
+        gamePlayUI.SetBool("Hide", true);
+        if (gameplayData.gameoverSuccess)
+        {
+            gameSuccessUI.SetBool("Hide", false);
+
+#if HOMA_SDK_INSTALLED
+            Analytics.LevelCompleted();
+#endif
+        }
+        else
+        {
+            gameFaildUI.SetBool("Hide", false);
+
+#if HOMA_SDK_INSTALLED
+            Analytics.LevelFailed("Battle Defeat");
+#endif
+        }
+
+    }
+
+    public override void ReloadLevel()
+    {
+        base.ReloadLevel();
+    }
+}
